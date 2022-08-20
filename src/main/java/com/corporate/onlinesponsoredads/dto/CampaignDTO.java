@@ -12,5 +12,5 @@ public class CampaignDTO {
     private String name;
     private Double bid;
     private Date startingDate;
-    private List<Long> products;
+    private String products;
 }

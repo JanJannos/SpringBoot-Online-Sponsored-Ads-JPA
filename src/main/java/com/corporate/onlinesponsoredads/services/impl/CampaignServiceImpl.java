@@ -22,7 +22,6 @@ public class CampaignServiceImpl implements CampaignService {
         Date  currentDateTime = new Date();
         campaignDTO.setStartingDate(currentDateTime);
         CampaignEntity campaignEntity = campaignConverter.convertDTOtoEntity(campaignDTO);
-        campaignEntity.setProducts(null);
         campaignEntity = campaignRepository.save(campaignEntity);
         CampaignDTO dto = campaignConverter.convertEntitytoDTO(campaignEntity);
         return dto;

@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "CAMPAIGNS_TABLE")
@@ -19,8 +20,6 @@ public class CampaignEntity {
     private Long id; // PK
     private String name;
     private Double bid;
-    // @JsonFormat(pattern="yyyy-MM-dd")
     private Date startingDate;
-    @OneToMany
-    private List<ProductEntity> products;
+    private String products;
 }
