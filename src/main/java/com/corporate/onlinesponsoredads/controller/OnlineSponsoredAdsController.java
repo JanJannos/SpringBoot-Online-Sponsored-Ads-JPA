@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/online-sponsored-ads/api/v1")
@@ -25,14 +26,17 @@ public class OnlineSponsoredAdsController {
 
     @PostMapping("/products")
     public ResponseEntity<ProductDTO> saveProperty(@RequestBody ProductDTO productDTO) {
+        UUID uuid = UUID.randomUUID();
+        String uuidAsString = uuid.toString();
+        productDTO.setSerialNumber(uuidAsString);
         productDTO = productService.saveProduct(productDTO);
         ResponseEntity<ProductDTO> responseEntity = new ResponseEntity<>(productDTO , HttpStatus.CREATED);
         return responseEntity; // return 201
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<ProductDTO>> getAllProperties() {
-        List<ProductDTO> listProps = productService.getAllProperties();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> listProps = productService.getAllProducts();
         ResponseEntity<List<ProductDTO>> res = new ResponseEntity<>(listProps , HttpStatus.OK);
         return res;
     }

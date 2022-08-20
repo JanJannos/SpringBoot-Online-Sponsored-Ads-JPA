@@ -20,8 +20,6 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     @Override
     public ProductDTO saveProduct(ProductDTO productDTO) {
-
-
         ProductEntity pe = productConverter.convertDTOtoEntity(productDTO);
         pe = productRepository.save(pe);
         ProductDTO dto = productConverter.convertEntitytoDTO(pe);
@@ -29,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getAllProperties() {
+    public List<ProductDTO> getAllProducts() {
         List<ProductEntity> all = (List<ProductEntity>) productRepository.findAll();
         List<ProductDTO> converted = new ArrayList<ProductDTO>();
         // Convert
