@@ -1,5 +1,7 @@
 package com.corporate.onlinesponsoredads.dto;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,4 +12,5 @@ public class CampaignDTO {
     private String name;
     private Double bid;
     private Date startingDate;
+    private List<Long> products;
 }

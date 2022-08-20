@@ -1,6 +1,8 @@
 package com.corporate.onlinesponsoredads.controller;
 
+import com.corporate.onlinesponsoredads.dto.CampaignDTO;
 import com.corporate.onlinesponsoredads.dto.ProductDTO;
+import com.corporate.onlinesponsoredads.services.CampaignService;
 import com.corporate.onlinesponsoredads.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,23 @@ public class OnlineSponsoredAdsController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CampaignService campaignService;
+
     @GetMapping("/health")
     public String SayHello() {
         return "Backend is up!";
     }
 
+    // Handle Campaigns
+    @PostMapping("/campaigns")
+    public ResponseEntity<CampaignDTO> saveCampaign(@RequestBody CampaignDTO campaignDTO) {
+        campaignDTO = campaignService.saveCampaign(campaignDTO);
+        ResponseEntity<CampaignDTO> responseEntity = new ResponseEntity<>(campaignDTO , HttpStatus.CREATED);
+        return responseEntity; // return 201
+    }
+
+    // Handle Products
 
     @PostMapping("/products")
     public ResponseEntity<ProductDTO> saveProperty(@RequestBody ProductDTO productDTO) {
