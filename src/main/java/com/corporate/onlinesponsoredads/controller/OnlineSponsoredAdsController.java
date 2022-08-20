@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/online-sponsored-ads/api/v1")
 public class OnlineSponsoredAdsController {
@@ -26,5 +28,12 @@ public class OnlineSponsoredAdsController {
         productDTO = productService.saveProduct(productDTO);
         ResponseEntity<ProductDTO> responseEntity = new ResponseEntity<>(productDTO , HttpStatus.CREATED);
         return responseEntity; // return 201
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductDTO>> getAllProperties() {
+        List<ProductDTO> listProps = productService.getAllProperties();
+        ResponseEntity<List<ProductDTO>> res = new ResponseEntity<>(listProps , HttpStatus.OK);
+        return res;
     }
 }

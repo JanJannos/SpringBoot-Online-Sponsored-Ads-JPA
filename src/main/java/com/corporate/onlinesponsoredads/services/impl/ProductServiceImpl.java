@@ -8,6 +8,9 @@ import com.corporate.onlinesponsoredads.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
@@ -23,5 +26,17 @@ public class ProductServiceImpl implements ProductService {
         pe = productRepository.save(pe);
         ProductDTO dto = productConverter.convertEntitytoDTO(pe);
         return dto;
+    }
+
+    @Override
+    public List<ProductDTO> getAllProperties() {
+        List<ProductEntity> all = (List<ProductEntity>) productRepository.findAll();
+        List<ProductDTO> converted = new ArrayList<ProductDTO>();
+        // Convert
+        for (ProductEntity pe : all) {
+            ProductDTO dto = productConverter.convertEntitytoDTO(pe);
+            converted.add(dto);
+        }
+        return converted;
     }
 }
