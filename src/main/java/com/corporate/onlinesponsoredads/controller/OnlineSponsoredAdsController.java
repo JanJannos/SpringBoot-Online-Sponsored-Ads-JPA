@@ -59,16 +59,19 @@ public class OnlineSponsoredAdsController {
     }
 
     @GetMapping("/serve-ads")
-    public List<ProductDTO> serveAds(@RequestParam("category") String category) {
-        // loop on all the campaigns
-//        List<CampaignDTO> listCampaignDTO = campaignService.getAllCampaigns();
-//        System.out.println("$$$$$$$$$$$$$$$$$$$$$$ ===============>>>> : " + listCampaignDTO.size());
-//        List<ProductDTO> listOfProducts = productService.getAllProducts();
-//        List<ProductDTO> productsList = listOfProducts.stream().filter(p -> p.getCategory().toLowerCase() == category.toLowerCase()).collect(Collectors.toList());
-//        return productsList;
-
-        var camp = campaignService.getCampaignWithHighestBid();
-        System.out.println("$$$$$$$$$$$$$$$$$ ==============>>>>> Filtered ======>>> " + camp);
-        return null;
+    public ResponseEntity<ProductDTO> serveAds(@RequestParam("category") String category) throws Exception {
+        // get campaign with highest value
+        var campaignDTO = campaignService.getCampaignWithHighestBid();
+        if (campaignDTO == null) {
+            throw new Exception("NO MATCHING PRODUCTS TO CATEGORY!");
+        }
+        // split to string array of product codes
+        var productCodes = campaignDTO.getProductCodes().split(",");
+        Long productCode = Long.parseLong(productCodes[0]);
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$ =================+>>>>>> Found : " + productCode);
+        // Get Product with Highest bid that is listed in the Campaign
+        var productBid = productService.getProductByCategoryAndId(category , productCode);
+        ResponseEntity<ProductDTO> res = new ResponseEntity<>(productBid , HttpStatus.OK);
+        return res;
     }
 }

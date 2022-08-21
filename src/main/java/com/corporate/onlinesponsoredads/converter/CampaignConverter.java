@@ -42,17 +42,12 @@ public class CampaignConverter {
             campaignDTO.setId(campaignEntity.getId());
             campaignDTO.setBid(campaignEntity.getBid());
             campaignDTO.setName(campaignEntity.getName());
+            campaignDTO.setProductCodes(campaignEntity.getProducts());
             campaignDTO.setStartingDate(campaignEntity.getStartingDate());
-            // get products list
+            // get products list as a string
             List<Long> parsedLongs = Arrays.asList(campaignEntity.getProducts().split(","))
                                            .stream().map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
             List<ProductEntity> productsList = (List<ProductEntity>) productRepository.findAllById(parsedLongs);
-//            String rep = "";
-//            for (ProductEntity prod: productsList) {
-//                rep += prod.toString();
-//            }
-//            String productsRepresentation = rep;
-
             campaignDTO.setProducts(productsList.toString());
             return campaignDTO;
         }

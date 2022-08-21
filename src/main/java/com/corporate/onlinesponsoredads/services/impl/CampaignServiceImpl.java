@@ -5,11 +5,7 @@ import com.corporate.onlinesponsoredads.entity.CampaignEntity;
 import com.corporate.onlinesponsoredads.repository.CampaignRepository;
 import com.corporate.onlinesponsoredads.services.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,13 +47,13 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
-    public CampaignDTO getCampaignWithHighestBid() {
-        // SELECT * FROM CAMPAIGNS_TABLE order by BID DESC LIMIT 1
-        // List<CampaignEntity> camps = (List<CampaignEntity>) campaignRepository.findAll();
-        // var campaignEntity = campaignRepository.findFirstByOrderByBid();
-        //
+    public CampaignDTO getCampaignWithHighestBid() throws Exception {
+        // Get the highest Campaign available
         var campaignEntity = campaignRepository.findTopByOrderByBidDesc();
-        System.out.println("$$$$$$$$$$$$$$$ findFirstByOrderByBid ==============> " + campaignEntity.getBid());
-        return null;
+        if (campaignEntity == null) {
+            throw new Exception("NO CAMPAIGNS AVAILABLE!");
+        }
+        var dto = campaignConverter.convertEntitytoDTO(campaignEntity);
+        return dto;
     }
 }

@@ -5,5 +5,5 @@ import java.util.List;
 public interface CampaignService {
     CampaignDTO saveCampaign(CampaignDTO campaignDTO);
     List<CampaignDTO> getAllCampaigns();
-    CampaignDTO getCampaignWithHighestBid();
+    CampaignDTO getCampaignWithHighestBid() throws Exception;
 }

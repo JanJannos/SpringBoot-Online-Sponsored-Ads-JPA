@@ -36,4 +36,10 @@ public class ProductServiceImpl implements ProductService {
         }
         return converted;
     }
+
+    @Override
+    public ProductDTO getProductByCategoryAndId(String category, Long Id) {
+        var productEntity =  productRepository.findFirstByCategoryAndId(category ,Id);
+        return productConverter.convertEntitytoDTO(productEntity);
+    }
 }
