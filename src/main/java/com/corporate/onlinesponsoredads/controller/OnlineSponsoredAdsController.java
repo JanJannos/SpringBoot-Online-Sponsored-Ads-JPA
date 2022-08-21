@@ -28,6 +28,14 @@ public class OnlineSponsoredAdsController {
     }
 
     // Handle Campaigns
+
+    @GetMapping("/campaigns")
+    public ResponseEntity<List<CampaignDTO>> getAllCampaigns() {
+        List<CampaignDTO> allCampaigns = campaignService.getAllCampaigns();
+        ResponseEntity<List<CampaignDTO>> res = new ResponseEntity<>(allCampaigns , HttpStatus.OK);
+        return res;
+    }
+
     @PostMapping("/campaigns")
     public ResponseEntity<CampaignDTO> saveCampaign(@RequestBody CampaignDTO campaignDTO) {
         campaignDTO = campaignService.saveCampaign(campaignDTO);
