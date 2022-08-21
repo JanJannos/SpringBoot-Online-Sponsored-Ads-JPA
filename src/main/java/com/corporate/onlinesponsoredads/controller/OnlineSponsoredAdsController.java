@@ -37,7 +37,11 @@ public class OnlineSponsoredAdsController {
     }
 
     @PostMapping("/campaigns")
-    public ResponseEntity<CampaignDTO> saveCampaign(@RequestBody CampaignDTO campaignDTO) {
+    public ResponseEntity<CampaignDTO> saveCampaign(@RequestBody CampaignDTO campaignDTO) throws Exception {
+        if (this.campaignService.getCampaignByName(campaignDTO.getName()) != null) {
+//            throw new Exception("CAMPAIGN Name already exists!!!");
+            throw new IllegalArgumentException("The value is already exists!");
+        }
         campaignDTO = campaignService.saveCampaign(campaignDTO);
         ResponseEntity<CampaignDTO> responseEntity = new ResponseEntity<>(campaignDTO , HttpStatus.CREATED);
         return responseEntity; // return 201

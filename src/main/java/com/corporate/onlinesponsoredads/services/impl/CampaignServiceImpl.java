@@ -4,6 +4,7 @@ import com.corporate.onlinesponsoredads.dto.CampaignDTO;
 import com.corporate.onlinesponsoredads.entity.CampaignEntity;
 import com.corporate.onlinesponsoredads.repository.CampaignRepository;
 import com.corporate.onlinesponsoredads.services.CampaignService;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -53,7 +54,15 @@ public class CampaignServiceImpl implements CampaignService {
         if (campaignEntity == null) {
             throw new Exception("NO CAMPAIGNS AVAILABLE!");
         }
-        var dto = campaignConverter.convertEntitytoDTO(campaignEntity);
-        return dto;
+        return campaignConverter.convertEntitytoDTO(campaignEntity);
+    }
+
+    @Override
+    public CampaignDTO getCampaignByName(String name) throws Exception {
+        var campaignEntity = campaignRepository.findFirstByName(name);
+        if (campaignEntity == null) {
+            return null;
+        }
+        return campaignConverter.convertEntitytoDTO(campaignEntity);
     }
 }

@@ -6,4 +6,5 @@ public interface CampaignService {
     CampaignDTO saveCampaign(CampaignDTO campaignDTO);
     List<CampaignDTO> getAllCampaigns();
     CampaignDTO getCampaignWithHighestBid() throws Exception;
+    CampaignDTO getCampaignByName(String name) throws Exception;
 }
