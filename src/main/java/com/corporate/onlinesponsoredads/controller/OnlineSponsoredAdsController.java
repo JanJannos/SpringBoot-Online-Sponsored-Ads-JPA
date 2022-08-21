@@ -8,12 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/online-sponsored-ads/api/v1")
@@ -65,10 +61,11 @@ public class OnlineSponsoredAdsController {
         if (campaignDTO == null) {
             throw new Exception("NO MATCHING PRODUCTS TO CATEGORY!");
         }
+
         // split to string array of product codes
         var productCodes = campaignDTO.getProductCodes().split(",");
         Long productCode = Long.parseLong(productCodes[0]);
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$ =================+>>>>>> Found : " + productCode);
+
         // Get Product with Highest bid that is listed in the Campaign
         var productBid = productService.getProductByCategoryAndId(category , productCode);
         ResponseEntity<ProductDTO> res = new ResponseEntity<>(productBid , HttpStatus.OK);
