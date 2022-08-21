@@ -3,6 +3,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.text.MessageFormat;
 
 @Entity
 @Table(name = "PRODUCTS_TABLE")
@@ -17,4 +18,7 @@ public class ProductEntity {
     private String category;
     private Double price;
     private String serialNumber;
+    public String toString() {
+        return MessageFormat.format("Product details: Title: {0} , category: {1} , price: {2} , serialNumber:{3}", this.title , category , price , serialNumber);
+    }
 }

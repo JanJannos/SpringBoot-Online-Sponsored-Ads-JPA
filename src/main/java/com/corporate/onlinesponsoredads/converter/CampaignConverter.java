@@ -6,8 +6,6 @@ import com.corporate.onlinesponsoredads.entity.ProductEntity;
 import com.corporate.onlinesponsoredads.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +43,17 @@ public class CampaignConverter {
             campaignDTO.setBid(campaignEntity.getBid());
             campaignDTO.setName(campaignEntity.getName());
             campaignDTO.setStartingDate(campaignEntity.getStartingDate());
-            // campaignDTO.setSerialNumber(campaignEntity.getSerialNumber());
+            // get products list
+            List<Long> parsedLongs = Arrays.asList(campaignEntity.getProducts().split(","))
+                                           .stream().map(s -> Long.parseLong(s.trim())).collect(Collectors.toList());
+            List<ProductEntity> productsList = (List<ProductEntity>) productRepository.findAllById(parsedLongs);
+//            String rep = "";
+//            for (ProductEntity prod: productsList) {
+//                rep += prod.toString();
+//            }
+//            String productsRepresentation = rep;
+
+            campaignDTO.setProducts(productsList.toString());
             return campaignDTO;
         }
 }

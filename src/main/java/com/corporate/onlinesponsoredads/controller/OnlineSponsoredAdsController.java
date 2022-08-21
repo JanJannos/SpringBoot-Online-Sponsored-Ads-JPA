@@ -9,8 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/online-sponsored-ads/api/v1")
@@ -53,5 +56,19 @@ public class OnlineSponsoredAdsController {
         List<ProductDTO> listProps = productService.getAllProducts();
         ResponseEntity<List<ProductDTO>> res = new ResponseEntity<>(listProps , HttpStatus.OK);
         return res;
+    }
+
+    @GetMapping("/serve-ads")
+    public List<ProductDTO> serveAds(@RequestParam("category") String category) {
+        // loop on all the campaigns
+//        List<CampaignDTO> listCampaignDTO = campaignService.getAllCampaigns();
+//        System.out.println("$$$$$$$$$$$$$$$$$$$$$$ ===============>>>> : " + listCampaignDTO.size());
+//        List<ProductDTO> listOfProducts = productService.getAllProducts();
+//        List<ProductDTO> productsList = listOfProducts.stream().filter(p -> p.getCategory().toLowerCase() == category.toLowerCase()).collect(Collectors.toList());
+//        return productsList;
+
+        var camp = campaignService.getCampaignWithHighestBid();
+        System.out.println("$$$$$$$$$$$$$$$$$ ==============>>>>> Filtered ======>>> " + camp);
+        return null;
     }
 }
