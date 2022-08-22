@@ -44,12 +44,9 @@ public class OnlineSponsoredAdsController {
     @PostMapping("/campaigns")
     public ResponseEntity<CampaignDTO> saveCampaign(@RequestBody CampaignDTO campaignDTO) throws ApiErrorResponse, Exception {
         if (this.campaignService.getCampaignByName(campaignDTO.getName()) != null) {
-            //  throw new Exception("CAMPAIGN Name already exists!!!");
-            throw new IllegalArgumentException("The value is already exists!");
+            throw new IllegalArgumentException("CAMPAIGN Name already exists!!!");
         }
         if (campaignDTO.getProducts() == null) {
-//            ResponseEntity<CampaignDTO> responseEntity = new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
-//            return responseEntity; // return 201
             ApiErrorResponse errorReponseDto = new ApiErrorResponse("No Products attached");
             throw errorReponseDto;
         }

@@ -7,6 +7,6 @@ public interface CampaignRepository extends CrudRepository<CampaignEntity, Long>
          // @Query("SELECT t FROM CampaignEntity t ORDER BY t.bid DESC")
          CampaignEntity findTopByOrderByBidDesc();
          CampaignEntity findFirstByName(String name);
-         // CampaignEntity findFirstByBid
-         //  CampaignEntity findFirstByStartingDate
+         //  CampaignEntity findFirstByBid(...);
+         //  CampaignEntity findFirstByStartingDate(...);
 }
