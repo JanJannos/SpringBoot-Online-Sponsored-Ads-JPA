@@ -1,14 +1,19 @@
 package com.corporate.onlinesponsoredads.controller;
 
+import com.corporate.onlinesponsoredads.dto.ApiErrorResponse;
 import com.corporate.onlinesponsoredads.dto.CampaignDTO;
 import com.corporate.onlinesponsoredads.dto.ProductDTO;
 import com.corporate.onlinesponsoredads.services.CampaignService;
 import com.corporate.onlinesponsoredads.services.ProductService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -37,10 +42,16 @@ public class OnlineSponsoredAdsController {
     }
 
     @PostMapping("/campaigns")
-    public ResponseEntity<CampaignDTO> saveCampaign(@RequestBody CampaignDTO campaignDTO) throws Exception {
+    public ResponseEntity<CampaignDTO> saveCampaign(@RequestBody CampaignDTO campaignDTO) throws ApiErrorResponse, Exception {
         if (this.campaignService.getCampaignByName(campaignDTO.getName()) != null) {
-//            throw new Exception("CAMPAIGN Name already exists!!!");
+            //  throw new Exception("CAMPAIGN Name already exists!!!");
             throw new IllegalArgumentException("The value is already exists!");
+        }
+        if (campaignDTO.getProducts() == null) {
+//            ResponseEntity<CampaignDTO> responseEntity = new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
+//            return responseEntity; // return 201
+            ApiErrorResponse errorReponseDto = new ApiErrorResponse("No Products attached");
+            throw errorReponseDto;
         }
         campaignDTO = campaignService.saveCampaign(campaignDTO);
         ResponseEntity<CampaignDTO> responseEntity = new ResponseEntity<>(campaignDTO , HttpStatus.CREATED);
